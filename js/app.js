@@ -35,7 +35,7 @@ var seattle = {
   },
 
   cookieSalesTotal: function () {
-    var result = 0
+    var result = 0;
     for (var j = 0; j < this.cookiesSoldByHour.length; j++) {
       result += this.cookiesSoldByHour[j];
     }
@@ -43,10 +43,25 @@ var seattle = {
   },
 
   render: function () {
-    var parent = document.getElementById('seattle');
-    var listItem = document.createElement('li');
-    listItem.textContent = this.hoursOfOperation;
-    parent.appendChild(listItem);
+    var parentHours = document.getElementById('seattle-hours');
+    var firstList = document.createElement('ul');
+
+    var parentCookies = document.getElementById('seattle-cookies');
+    var secondList = document.createElement('ul');
+
+    var parentTotal = document.getElementById('seattle-total');
+    var thirdList = document.createElement('ul');
+
+
+    firstList.textContent = this.hoursOfOperation;
+    parentHours.appendChild(firstList);
+
+    secondList.textContent = this.cookiesSoldByHour;
+    parentCookies.appendChild(secondList);
+
+    thirdList.textContent = this.totalCookiesSold;
+    parentTotal.appendChild(thirdList);
+
   }
 }
 
@@ -55,16 +70,3 @@ seattle.cookieSalesSimulator();
 seattle.cookieSalesTotal();
 seattle.render();
 
-
-
-  /* randomCustomersPerHour: function() {
-    for (var i = 0; i < this.hoursOfOperation.length; i++){
-
-        this.customersPerHour = Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers;
-        
-        this.customersPerHour.push(this.randomCustomersPerHour());
-       
-        console.log(this.cookiesSoldByHour);
-
-    }
-  } */
