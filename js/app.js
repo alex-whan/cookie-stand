@@ -1,67 +1,75 @@
 'use strict'
 
+// Global variables
+
+var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+
 // Seattle object
 
 var seattle = {
   location: 'Seattle',
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  minCustomers: 23,
-  maxCustomers: 65,
+  minCustomersPerHour: 23,
+  maxCustomersPerHour: 65,
   avgCookiesPerCustomer: 6.3,
-  cookiesSoldByHour: [],
-  totalCookiesSold: [],
+  customersEachHour: [],
+  cookiesSoldEachHour: [],
+  totalCookiesSoldForTheDay: 0,
   
-//randomizes number of customers per hour between min/max properties
-
-  randomCustomerNumber: function() {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers;
+//Randomizes number of customers per hour between min/max properties and pushes results into an array
+  calcRandomCustomersEachHour: function() {
+    for (var i=0; i<hoursOfOperation.length; i++){
+      var customersThisHour = getRandomNumber(this.minCustomersPerHour, this.maxCustomersPerHour);
+      this.customersEachHour.push(customersThisHour);
+    }
   },
 
-  //multiplies avgCookiesPerCustomer property by customers per hour
+  //Multiplies avgCookiesPerCustomer property by customers per hour and using that data sums up total cookies for full day of sales
   cookieSalesSimulator: function () {
-    for (var i = 0; i < this.hoursOfOperation.length; i++){
-      var result = Math.round(this.randomCustomerNumber() * this.avgCookiesPerCustomer);
-      this.cookiesSoldByHour.push(result);
+    for (var i=0; i<hoursOfOperation.length; i++){
+      var fullCookiesSoldEachHour = Math.ceil(this.customersEachHour[i] * this.avgCookiesPerCustomer);
+      this.cookiesSoldEachHour.push(fullCookiesSoldEachHour);
+      this.totalCookiesSoldForTheDay += fullCookiesSoldEachHour;
     }
-  },
-
-  //Calculates total cookies sold during that day
-  cookieSalesTotal: function () {
-    var result = 0;
-    for (var j = 0; j < this.cookiesSoldByHour.length; j++) {
-      result += this.cookiesSoldByHour[j];
-    }
-    this.totalCookiesSold.push(result); 
   },
 
   //Renders city name, list of hours, cookies sold per hour, and total
   render: function () {
-    var parent = document.getElementById('seattle');
+
+    // Calls functions to calculate hourly customers and hourly cookie sales
+    seattle.calcRandomCustomersEachHour();
+    seattle.cookieSalesSimulator();
+    var seattleElement = document.getElementById('seattle');
+
+    // Renders store/location name    
     var cityName = document.createElement('h2');
     cityName.textContent = `${this.location}`;
-    parent.appendChild(cityName);
+    seattleElement.appendChild(cityName);
 
-    for (var k = 0; k < this.hoursOfOperation.length; k++){
+    // Loops through/renders cookiesSoldEachHour array
+    for (var i=0; i<hoursOfOperation.length; i++){
       var listItem = document.createElement('li'); 
-      listItem.textContent = `${this.hoursOfOperation[k]}: ${this.cookiesSoldByHour[k]} cookies`;
-      parent.appendChild(listItem);
-      
+      listItem.textContent = `${hoursOfOperation[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
+      seattleElement.appendChild(listItem);
     }
 
-    var cookieTotal = document.createElement('li');
-    cookieTotal.textContent = `Total: ${this.totalCookiesSold} cookies`;
-    parent.appendChild(cookieTotal);
-
+    // Renders totalCookiesSoldForTheDay value
+    listItem = document.createElement('li');
+    listItem.textContent = `Total: ${this.totalCookiesSoldForTheDay} cookies`;
+    seattleElement.appendChild(listItem);
   }
 }
 
-//Function calls
-seattle.randomCustomerNumber();
-seattle.cookieSalesSimulator();
-seattle.cookieSalesTotal();
+//Function call to render object
 seattle.render();
 
+// Helper function - from MDN Math.random page
+// Moved this code down here from its original place in Seattle object (more efficient for re-use)
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min; //both min/max are inclusive
+}
+
+/*
 // Tokyo object
 
 var tokyo = {
@@ -307,3 +315,4 @@ lima.randomCustomerNumber();
 lima.cookieSalesSimulator();
 lima.cookieSalesTotal();
 lima.render();
+*/
