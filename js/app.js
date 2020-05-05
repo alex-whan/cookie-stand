@@ -1,15 +1,19 @@
 'use strict'
 
+// Global variables
+
+var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+
 // Seattle object
 
 var seattle = {
   location: 'Seattle',
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  minCustomers: 23,
-  maxCustomers: 65,
+  minCustomersPerHour: 23,
+  maxCustomersPerHour: 65,
   avgCookiesPerCustomer: 6.3,
-  cookiesSoldByHour: [],
-  totalCookiesSold: [],
+  customersEachHour: [],
+  cookiesSoldEachHour: [],
+  totalCookiesSoldForTheDay: 0,
   
 //randomizes number of customers per hour between min/max properties
 
