@@ -25,41 +25,51 @@ var seattle = {
 
   //Multiplies avgCookiesPerCustomer property by customers per hour and using that data sums up total cookies for full day of sales
   cookieSalesSimulator: function () {
-    for (var i=0; i<this.hoursOfOperation.length; i++){
-      var fullCookiesSoldForEachHour = Math.ceil(this.customersEachHour * this.avgCookiesPerCustomer);
-      this.cookiesSoldByHour.push(fullCookiesSoldForEachHour);
-      this.totalCookiesSoldForTheDay += fullCookiesSoldForEachHour;
+    for (var i=0; i<hoursOfOperation.length; i++){
+      var fullCookiesSoldEachHour = Math.ceil(this.customersEachHour[i] * this.avgCookiesPerCustomer);
+      this.cookiesSoldEachHour.push(fullCookiesSoldEachHour);
+      this.totalCookiesSoldForTheDay += fullCookiesSoldEachHour;
     }
   },
-  
+
   //Renders city name, list of hours, cookies sold per hour, and total
   render: function () {
-    var parent = document.getElementById('seattle');
+
+    // Calls functions to calculate hourly customers and hourly cookie sales
+    seattle.calcRandomCustomersEachHour();
+    seattle.cookieSalesSimulator();
+    var seattleElement = document.getElementById('seattle');
+
+    // Renders store/location name    
     var cityName = document.createElement('h2');
     cityName.textContent = `${this.location}`;
-    parent.appendChild(cityName);
+    seattleElement.appendChild(cityName);
 
-    for (var k = 0; k < this.hoursOfOperation.length; k++){
+    // Loops through/renders cookiesSoldEachHour array
+    for (var i=0; i<hoursOfOperation.length; i++){
       var listItem = document.createElement('li'); 
-      listItem.textContent = `${this.hoursOfOperation[k]}: ${this.cookiesSoldByHour[k]} cookies`;
-      parent.appendChild(listItem);
-      
+      listItem.textContent = `${hoursOfOperation[i]}: ${this.cookiesSoldEachHour[i]} cookies`;
+      seattleElement.appendChild(listItem);
     }
 
-    var cookieTotal = document.createElement('li');
-    cookieTotal.textContent = `Total: ${this.totalCookiesSold} cookies`;
-    parent.appendChild(cookieTotal);
-
+    // Renders totalCookiesSoldForTheDay value
+    listItem = document.createElement('li');
+    listItem.textContent = `Total: ${this.totalCookiesSoldForTheDay} cookies`;
+    seattleElement.appendChild(listItem);
   }
 }
 
-//Function calls
-seattle.randomCustomerNumber();
-seattle.cookieSalesSimulator();
-seattle.cookieSalesTotal();
+//Function call to render object
 seattle.render();
 
+// Helper function - from MDN Math.random page
+// Moved this code down here from its original place in Seattle object (more efficient for re-use)
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min; //both min/max are inclusive
+}
+
+/*
 // Tokyo object
 
 var tokyo = {
@@ -305,10 +315,4 @@ lima.randomCustomerNumber();
 lima.cookieSalesSimulator();
 lima.cookieSalesTotal();
 lima.render();
-
-// Helper function - from MDN Math.random page
-// Moved this code down here from its original place in Seattle object (more efficient for re-use)
-
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min; //both min/max are inclusive
-}
+*/
