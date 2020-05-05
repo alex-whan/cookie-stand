@@ -43,7 +43,34 @@ var seattle = {
   },
 
   render: function () {
-    var parentHours = document.getElementById('seattle-hours');
+    var parent = document.getElementById('seattle');
+    var cityName = document.createElement('h2');
+    cityName.textContent = `${this.location}`;
+    parent.appendChild(cityName);
+
+    for (var k = 0; k < this.hoursOfOperation.length; k++){
+      var listItem = document.createElement('li'); 
+      listItem.textContent = `${this.hoursOfOperation[k]}: ${this.cookiesSoldByHour[k]} cookies`;
+      parent.appendChild(listItem);
+      
+    }
+
+    var cookieTotal = document.createElement('li');
+    cookieTotal.textContent = `Total: ${this.totalCookiesSold} cookies`;
+    parent.appendChild(`${this.totalCookiesSold}`);
+
+  }
+}
+
+seattle.randomCustomerNumber();
+seattle.cookieSalesSimulator();
+seattle.cookieSalesTotal();
+seattle.render();
+
+
+
+
+/*var parentHours = document.getElementById('seattle-hours');
     var firstList = document.createElement('ul');
 
     var parentCookies = document.getElementById('seattle-cookies');
@@ -60,13 +87,4 @@ var seattle = {
     parentCookies.appendChild(secondList);
 
     thirdList.textContent = this.totalCookiesSold;
-    parentTotal.appendChild(thirdList);
-
-  }
-}
-
-seattle.randomCustomerNumber();
-seattle.cookieSalesSimulator();
-seattle.cookieSalesTotal();
-seattle.render();
-
+    parentTotal.appendChild(thirdList);*/
