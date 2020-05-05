@@ -17,8 +17,11 @@ var seattle = {
   
 //randomizes number of customers per hour between min/max properties
 
-  randomCustomerNumber: function() {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers;
+  calcRandomCustomersEachHour: function() {
+    for (var i=0; i<hoursOfOperation.length; i++){
+      var customersThisHour = getRandomNumber(this.minCustomersPerHour, this.maxCustomersPerHour);
+      this.customersEachHour.push(customersThisHour);
+    }
   },
 
   //multiplies avgCookiesPerCustomer property by customers per hour
@@ -311,3 +314,10 @@ lima.randomCustomerNumber();
 lima.cookieSalesSimulator();
 lima.cookieSalesTotal();
 lima.render();
+
+// Helper function - from MDN Math.random page
+// Moved this code down here from its original place in Seattle object (more efficient for re-use)
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min; //both min/max are inclusive
+}
