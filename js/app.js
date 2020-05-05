@@ -15,8 +15,7 @@ var seattle = {
   cookiesSoldEachHour: [],
   totalCookiesSoldForTheDay: 0,
   
-//randomizes number of customers per hour between min/max properties
-
+//Randomizes number of customers per hour between min/max properties and pushes results into an array
   calcRandomCustomersEachHour: function() {
     for (var i=0; i<hoursOfOperation.length; i++){
       var customersThisHour = getRandomNumber(this.minCustomersPerHour, this.maxCustomersPerHour);
@@ -24,23 +23,15 @@ var seattle = {
     }
   },
 
-  //multiplies avgCookiesPerCustomer property by customers per hour
+  //Multiplies avgCookiesPerCustomer property by customers per hour and using that data sums up total cookies for full day of sales
   cookieSalesSimulator: function () {
-    for (var i = 0; i < this.hoursOfOperation.length; i++){
-      var result = Math.round(this.randomCustomerNumber() * this.avgCookiesPerCustomer);
-      this.cookiesSoldByHour.push(result);
+    for (var i=0; i<this.hoursOfOperation.length; i++){
+      var fullCookiesSoldForEachHour = Math.ceil(this.customersEachHour * this.avgCookiesPerCustomer);
+      this.cookiesSoldByHour.push(fullCookiesSoldForEachHour);
+      this.totalCookiesSoldForTheDay += fullCookiesSoldForEachHour;
     }
   },
-
-  //Calculates total cookies sold during that day
-  cookieSalesTotal: function () {
-    var result = 0;
-    for (var j = 0; j < this.cookiesSoldByHour.length; j++) {
-      result += this.cookiesSoldByHour[j];
-    }
-    this.totalCookiesSold.push(result); 
-  },
-
+  
   //Renders city name, list of hours, cookies sold per hour, and total
   render: function () {
     var parent = document.getElementById('seattle');
