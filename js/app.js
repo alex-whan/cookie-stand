@@ -64,12 +64,12 @@ seattle.render();
 
 // Tokyo object
 
-var seattle = {
-  location: 'Seattle',
+var tokyo = {
+  location: 'Tokyo',
   hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  minCustomers: 23,
-  maxCustomers: 65,
-  avgCookiesPerCustomer: 6.3,
+  minCustomers: 3,
+  maxCustomers: 24,
+  avgCookiesPerCustomer: 1.2,
   cookiesSoldByHour: [],
   totalCookiesSold: [],
   
@@ -118,7 +118,7 @@ var seattle = {
 }
 
 //Function calls
-seattle.randomCustomerNumber();
-seattle.cookieSalesSimulator();
-seattle.cookieSalesTotal();
-seattle.render();
+tokyo.randomCustomerNumber();
+tokyo.cookieSalesSimulator();
+tokyo.cookieSalesTotal();
+tokyo.render();
