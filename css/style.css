@@ -1,5 +1,4 @@
 table {
-  display: table;
   background: slategray;
   border-spacing: 2px;
   border-collapse: collapse;
@@ -9,14 +8,17 @@ table {
 
 th {
   border: solid black 3px;
+  padding: 5px;
 }
 
 tr {
   border: solid black 3px;
+
 }
 
 td {
   border: solid black 3px;
+  padding: 5px;
 }
 
 tr:hover {
