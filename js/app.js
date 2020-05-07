@@ -3,6 +3,7 @@
 // Global variables
 
 var parentElement = document.getElementById('table');
+var form = document.getElementById('form');
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 var allStores = [];
 
@@ -177,14 +178,35 @@ function renderFooter(){
   parentElement.appendChild(tableRow);
 };
 
+// Event handler
+function handleFormSubmit(event){
+  event.preventDefault();
 
+  var name = event.target.name.value;
+  var minCustomers = event.target.minCustomers.value;
+  var maxCustomers = event.target.maxCustomers.value;
+  var avgCookies = event.target.avgCookies.value;
 
+  newLoc = new Store(name, minCustomers, maxCustomers, avgCookies);
+  console.log(allStores);
+
+  //var totalRow = document.getElementById('totals');
+
+  newLoc.render();
+
+}
 
 var seattle = new Store('Seattle', 23, 65, 6.3);
 var tokyo = new Store('Tokyo', 3, 24, 1.2);
 var dubai = new Store('Dubai', 11, 38, 3.7);
 var paris = new Store('Paris', 20, 38, 2.3);
 var lima = new Store('Lima', 2, 16, 4.6);
+
+// Event listener function
+
+form.addEventListener('Submit', handleFormSubmit);
+
+
 
 renderHeader();  
 seattle.render();
