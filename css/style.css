@@ -1,26 +1,30 @@
 table {
-  background: slategray;
   border-spacing: 2px;
   border-collapse: collapse;
   color: white;
   border: solid black 3px;
 }
 
+td {
+  background-color: slategray;
+  border: solid black 3px;
+  padding: 5px;
+}
+
+td:hover {
+  background-color: blue;
+}
 th {
   border: solid black 3px;
   padding: 5px;
 }
 
-tr {
-  border: solid black 3px;
-
-}
-
-td {
-  border: solid black 3px;
-  padding: 5px;
-}
-
-tr:hover {
+th:hover {
   background-color: blue;
 }
+
+tr {
+  background-color: darkslategrey;
+  border: solid black 3px;
+}
+
