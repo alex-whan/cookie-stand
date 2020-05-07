@@ -28,3 +28,41 @@ tr {
   border: solid black 3px;
 }
 
+main {
+  margin-top: 10%;
+}
+
+#main-header {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+body {
+  background-color: lightpink;
+}
+
+#salmon-logo {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: auto;
+
+}
+
+img:not(#salmon-logo) {
+  border: ridge black 5px;
+}
+
+.product {
+  height: 200px;
+  width: auto;
+}
+
+.city, #city-header {
+  display: inline;
+  text-align: center;
+}
+
+
