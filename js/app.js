@@ -2,7 +2,9 @@
 
 // Global variables
 
+var parentElement = document.getElementById('table');
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var allStores = [];
 
 // Constructor Function for Store locations
 
@@ -14,6 +16,7 @@ function Store(name, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCust
   this.customersEachHour = [];
   this.cookiesSoldEachHour = [];  
   this.totalCookiesSoldForTheDay = 0;
+  allStores.push(this); // push this object instance into allStores global array
 };
 
 Store.prototype.calcRandomCustomersEachHour = function () {
@@ -51,7 +54,7 @@ Store.prototype.render = function(){
 
   // render function only for the BODY of the table
   // Select/get the parent element (<tbody>)
-  var parentElement = document.getElementById('table');
+  parentElement = document.getElementById('table');
 
   // This is for the "Seattle" store (or "name")
   // Create a table row <tr>
@@ -99,7 +102,7 @@ Store.prototype.getRandomNumber = function (min, max) {
 
 // Header rendering function
 function renderHeader() {
-  var parentElement = document.getElementById('table');
+  parentElement = document.getElementById('table');
   // This is for the "Seattle" store (or "name")
   // Create a table row <tr>
   var tableRow = document.createElement('tr');
@@ -127,46 +130,58 @@ function renderHeader() {
   
 };
 
+function renderFooter(){
+  var totalOfAllTotals = 0; // need to declare this outside of outer for loop to keep track of hourly global total
 
-// Footer rendering function
-// Nested for loop to loop through hourly total at each location
-// for every hour -> for every store
-function renderFooter() {
-  // Select parent element (table)
-  // Create a table row <tr>
-  var parentElement = document.getElementById('table');
+  // create table row
   var tableRow = document.createElement('tr');
-  var tableHeader = document.createElement('th');
-  tableHeader.textContent = 'Totals';
-  tableRow.appendChild(tableHeader);
+  // create a td
+  var tableData = document.createElement('th');
+  // fill it with the word 'Total'
+  tableData.textContent = 'Total';
+  // append it to the table row
+  tableRow.appendChild(tableData);
+
+// Outer loop: for each hour
+  // Inner loop is going to loop over each store
+  // Access my "cookies sold each hour" array at the same position as my outer loop
 
   for(var i=0; i<hours.length; i++){
-    // Global variable that resets to zero each iteration
-    var globalHourlyTotal = 0;
-    // Inner for loop to add hourly sales at each store to global hourly sales
-    for(var j=0; j<allStores.length; j++){
-      globalHourlyTotal += allStores[j].cookiesSoldEachHour[i];
-    }
+    var sum = 0;
 
-        // Create a <th>/<td> to stick onto table row <tr>
-      var tableHeader = document.createElement('th')
-        // Fill it with content: this.name
-      tableHeader.textContent = globalHourlyTotal;
-        // Append <th> to the table row/<tr> we created (in this case, ROW is the parent, and <th> gets appended to its OWN parent (<tr>))
-        // Want to append all <td>/<th> to the table row, then append ROW to TABLE once done
-      tableRow.appendChild(tableHeader);
+    for(var j=0; j<allStores.length; j++){
+      sum += allStores[j].cookiesSoldEachHour[i];
+    }
+    
+    // sum is an hourly total, so for the "total" total, we want to add those those sums to it each loop
+
+    totalOfAllTotals += sum; // adds sum to grand total each loop
+
+    // create a td
+    tableData = document.createElement('td');
+    // fill it with the "sum"
+    tableData.textContent = sum;
+    // append it to the table row
+    tableRow.appendChild(tableData);
+
   }
-  parentElement.appendChild(tableRow);     
-  
-}
+
+  // Append the total of all totals
+  // create a td
+  tableData = document.createElement('td');
+  // fill it with the total of all totals
+  tableData.textContent = totalOfAllTotals;
+  // append it to the table row
+  tableRow.appendChild(tableData);
+  // append table row to parent element
+  parentElement.appendChild(tableRow);
+};
 
 var seattle = new Store('Seattle', 23, 65, 6.3);
 var tokyo = new Store('Tokyo', 3, 24, 1.2);
 var dubai = new Store('Dubai', 11, 38, 3.7);
 var paris = new Store('Paris', 20, 38, 2.3);
 var lima = new Store('Lima', 2, 16, 4.6);
-
-var allStores = [seattle, tokyo, dubai, paris, lima];
 
 renderHeader();  
 seattle.render();
