@@ -177,40 +177,6 @@ function renderFooter(){
   parentElement.appendChild(tableRow);
 };
 
-
-/*
-// Footer rendering function
-// Nested for loop to loop through hourly total at each location
-// for every hour -> for every store
-function renderFooter() {
-  // Select parent element (table)
-  // Create a table row <tr>
-  parentElement = document.getElementById('table');
-  var tableRow = document.createElement('tr');
-  var tableHeader = document.createElement('th');
-  tableHeader.textContent = 'Totals';
-  tableRow.appendChild(tableHeader);
-
-  for(var i=0; i<hours.length; i++){
-    // Global variable that resets to zero each iteration
-    var globalHourlyTotal = 0;
-    // Inner for loop to add hourly sales at each store to global hourly sales
-    for(var j=0; j<allStores.length; j++){
-      globalHourlyTotal += allStores[j].cookiesSoldEachHour[i];
-    }
-
-        // Create a <th>/<td> to stick onto table row <tr>
-      var tableHeader = document.createElement('th')
-        // Fill it with content: this.name
-      tableHeader.textContent = globalHourlyTotal;
-        // Append <th> to the table row/<tr> we created (in this case, ROW is the parent, and <th> gets appended to its OWN parent (<tr>))
-        // Want to append all <td>/<th> to the table row, then append ROW to TABLE once done
-      tableRow.appendChild(tableHeader);
-  }
-  parentElement.appendChild(tableRow);     
-  
-} */
-
 var seattle = new Store('Seattle', 23, 65, 6.3);
 var tokyo = new Store('Tokyo', 3, 24, 1.2);
 var dubai = new Store('Dubai', 11, 38, 3.7);
