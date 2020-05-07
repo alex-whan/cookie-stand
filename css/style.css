@@ -48,7 +48,12 @@ body {
   display: block;
   width: 200px;
   height: auto;
+}
 
+#family {
+  height: 300px;
+  width: auto;
+  align-content: center;
 }
 
 img:not(#salmon-logo) {
