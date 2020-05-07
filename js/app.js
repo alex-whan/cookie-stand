@@ -177,6 +177,9 @@ function renderFooter(){
   parentElement.appendChild(tableRow);
 };
 
+
+
+
 var seattle = new Store('Seattle', 23, 65, 6.3);
 var tokyo = new Store('Tokyo', 3, 24, 1.2);
 var dubai = new Store('Dubai', 11, 38, 3.7);
