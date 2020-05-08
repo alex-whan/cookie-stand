@@ -136,6 +136,8 @@ function renderFooter(){
 
   // create table row
   var tableRow = document.createElement('tr');
+  // assign an id to table row to allow new values to remove/refresh it
+  tableRow.id ='totals';
   // create a td
   var tableData = document.createElement('th');
   // fill it with the word 'Total'
@@ -164,7 +166,6 @@ function renderFooter(){
     tableData.textContent = sum;
     // append it to the table row
     tableRow.appendChild(tableData);
-
   }
 
   // Append the total of all totals
@@ -183,17 +184,14 @@ function handleFormSubmit(event){
   event.preventDefault();
 
   var name = event.target.name.value;
-  var minCustomers = event.target.minCustomers.value;
-  var maxCustomers = event.target.maxCustomers.value;
-  var avgCookies = event.target.avgCookies.value;
-
-  newLoc = new Store(name, minCustomers, maxCustomers, avgCookies);
-  console.log(allStores);
-
-  //var totalRow = document.getElementById('totals');
-
-  newLoc.render();
-
+  var minCustomers = parseInt(event.target.minCustomers.value);
+  var maxCustomers = parseInt(event.target.maxCustomers.value);
+  var avgCookies = parseInt(event.target.avgCookies.value);
+  var newStore = new Store(name, minCustomers, maxCustomers, avgCookies);
+  var totalRow = document.getElementById('totals');
+  totalRow.parentNode.removeChild(totalRow);
+  newStore.render();
+  renderFooter();
 }
 
 var seattle = new Store('Seattle', 23, 65, 6.3);
@@ -204,15 +202,13 @@ var lima = new Store('Lima', 2, 16, 4.6);
 
 // Event listener function
 
-form.addEventListener('Submit', handleFormSubmit);
+form.addEventListener('submit', handleFormSubmit);
 
+renderHeader();
 
+for(var i=0; i<allStores.length; i++){
+  allStores[i].render();
+}
 
-renderHeader();  
-seattle.render();
-tokyo.render();
-dubai.render();
-paris.render();
-lima.render();
 renderFooter();
 
