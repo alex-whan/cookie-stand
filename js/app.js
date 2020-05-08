@@ -3,6 +3,7 @@
 // Global variables
 
 var parentElement = document.getElementById('table');
+var form = document.getElementById('form');
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 var allStores = [];
 
@@ -135,6 +136,8 @@ function renderFooter(){
 
   // create table row
   var tableRow = document.createElement('tr');
+  // assign an id to table row to allow new values to remove/refresh it
+  tableRow.id ='totals';
   // create a td
   var tableData = document.createElement('th');
   // fill it with the word 'Total'
@@ -163,7 +166,6 @@ function renderFooter(){
     tableData.textContent = sum;
     // append it to the table row
     tableRow.appendChild(tableData);
-
   }
 
   // Append the total of all totals
@@ -177,17 +179,36 @@ function renderFooter(){
   parentElement.appendChild(tableRow);
 };
 
+// Event handler
+function handleFormSubmit(event){
+  event.preventDefault();
+
+  var name = event.target.name.value;
+  var minCustomers = parseInt(event.target.minCustomers.value);
+  var maxCustomers = parseInt(event.target.maxCustomers.value);
+  var avgCookies = parseInt(event.target.avgCookies.value);
+  var newStore = new Store(name, minCustomers, maxCustomers, avgCookies);
+  var totalRow = document.getElementById('totals');
+  totalRow.parentNode.removeChild(totalRow);
+  newStore.render();
+  renderFooter();
+}
+
 var seattle = new Store('Seattle', 23, 65, 6.3);
 var tokyo = new Store('Tokyo', 3, 24, 1.2);
 var dubai = new Store('Dubai', 11, 38, 3.7);
 var paris = new Store('Paris', 20, 38, 2.3);
 var lima = new Store('Lima', 2, 16, 4.6);
 
-renderHeader();  
-seattle.render();
-tokyo.render();
-dubai.render();
-paris.render();
-lima.render();
+// Event listener function
+
+form.addEventListener('submit', handleFormSubmit);
+
+renderHeader();
+
+for(var i=0; i<allStores.length; i++){
+  allStores[i].render();
+}
+
 renderFooter();
 

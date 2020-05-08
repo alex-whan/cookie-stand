@@ -29,7 +29,7 @@ tr {
 }
 
 main {
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 #main-header {
@@ -53,7 +53,9 @@ body {
 #family {
   height: 300px;
   width: auto;
-  align-content: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img:not(#salmon-logo) {
@@ -68,6 +70,10 @@ img:not(#salmon-logo) {
 .city, #city-header {
   display: inline;
   text-align: center;
+}
+
+input:valid {
+  border: 1px solid black;
 }
 
 
